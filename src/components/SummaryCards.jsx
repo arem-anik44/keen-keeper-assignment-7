@@ -3,22 +3,22 @@ const SummaryCards = () => {
     {
       id: 1,
       title: "Total Friends",
-      value: "08",
+      value: "16",
     },
     {
       id: 2,
-      title: "Close Friends",
-      value: "04",
+      title: "On Tack",
+      value: "4",
     },
     {
       id: 3,
-      title: "This Week Contact",
-      value: "12",
+      title: "Need Attention  ",
+      value: "7",
     },
     {
       id: 4,
-      title: "Pending Reconnect",
-      value: "03",
+      title: "Interactions This Month",
+      value: "13",
     },
   ];
 
@@ -29,10 +29,11 @@ const SummaryCards = () => {
           key={item.id}
           className="bg-white rounded-2xl p-6 shadow-sm text-center"
         >
-          <h3 className="text-lg font-semibold text-[#444]">{item.title}</h3>
-          <p className="text-3xl md:text-4xl font-bold text-[#176AE5] mt-3">
+          <p className="text-3xl md:text-4xl font-bold text-[#244D3F] ">
             {item.value}
           </p>
+          <h3 className="text-[18px] mt-3 text-[#64748B]">{item.title}</h3>
+          
         </div>
       ))}
     </div>

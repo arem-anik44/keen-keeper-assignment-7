@@ -1,5 +1,6 @@
 import { Link, useLoaderData, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { HiArrowLeft, HiCalendar, HiClock, HiFlag } from "react-icons/hi";
 import callIcon from "../assets/call.png";
 import textIcon from "../assets/text.png";
 import videoIcon from "../assets/video.png";
@@ -22,7 +23,6 @@ const FriendDetails = () => {
           <p className="text-[#6B7280] mb-6">
             No friend data matched this profile. Please go back and select a valid friend.
           </p>
-
           <Link
             to="/"
             className="btn bg-[#176AE5] text-white border-none hover:bg-[#1257bf] rounded-xl px-6"
@@ -47,73 +47,68 @@ const FriendDetails = () => {
     next_due_date,
   } = friend;
 
-  const getStatusClass = () => {
-    if (status === "overdue") {
-      return "bg-[#F44336] text-white";
-    }
-
-    if (status === "almost due") {
-      return "bg-[#F59E0B] text-white";
-    }
-
-    return "bg-[#22C55E] text-white";
+  const getStatusStyle = () => {
+    if (status === "overdue") return "bg-[#FEE2E2] text-[#DC2626]";
+    if (status === "almost due") return "bg-[#FEF3C7] text-[#D97706]";
+    return "bg-[#DCFCE7] text-[#16A34A]";
   };
+
+  
 
   const handleCheckIn = (type) => {
-  const newData = {
-    id: Date.now(),
-    name: name,
-    type: type,
-    time: new Date().toLocaleString(),
+    const newData = {
+      id: Date.now(),
+      name,
+      type,
+      time: new Date().toLocaleString(),
+    };
+    saveData(newData);
+
+    const toastStyles = {
+      Call: { background: "#176AE5", color: "#fff" },
+      Text: { background: "#22C55E", color: "#fff" },
+      Video: { background: "#F59E0B", color: "#fff" },
+    };
+
+    toast.success(`${type} with ${name} saved!`, { style: toastStyles[type] });
   };
 
-  saveData(newData);
+  const checkInActions = [
+    { type: "Call", icon: callIcon, color: "#176AE5" },
+    { type: "Text", icon: textIcon, color: "#22C55E" },
+    { type: "Video", icon: videoIcon, color: "#F59E0B" },
+  ];
 
-  if (type === "Call") {
-    toast.success(`Call with ${name} saved!`, {
-      style: {
-        background: "#176AE5",
-        color: "#fff",
-      },
-    });
-  }
-
-  if (type === "Text") {
-    toast.success(`Text with ${name} saved!`, {
-      style: {
-        background: "#22C55E",
-        color: "#fff",
-      },
-    });
-  }
-
-  if (type === "Video") {
-    toast.success(`Video with ${name} saved!`, {
-      style: {
-        background: "#F59E0B",
-        color: "#fff",
-      },
-    });
-  }
-};
+  const statCards = [
+    { label: "Days Since Contact", value: days_since_contact, icon: <HiClock size={18} /> },
+    { label: "Goal (Days)", value: goal, icon: <HiFlag size={18} /> },
+    { label: "Next Due", value: next_due_date, icon: <HiCalendar size={18} /> },
+  ];
 
   return (
-    <div className="py-8">
+    <div className="py-6 md:py-8">
+      
+
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        
         <div className="lg:col-span-4 space-y-4">
-          <div className="bg-white rounded-xl shadow-sm p-6 text-center">
-            <img
-              src={picture}
-              alt={name}
-              className="w-24 h-24 rounded-full object-cover mx-auto"
-            />
 
-            <h2 className="text-3xl font-bold text-[#1F2937] mt-4">{name}</h2>
+          
+          <div className="bg-white rounded-2xl shadow-sm p-6 text-center">
+            <div className="relative inline-block">
+              <img
+                src={picture}
+                alt={name}
+                className="w-24 h-24 rounded-full object-cover mx-auto ring-4 ring-[#EEF4FF]"
+              />
+              
+            </div>
 
-            <div className="mt-4">
-              <span
-                className={`px-4 py-1 rounded-full text-sm capitalize ${getStatusClass()}`}
-              >
+            <h2 className="text-2xl font-bold text-[#1F2937] mt-4">{name}</h2>
+
+            <div className="mt-3">
+              <span className={`px-4 py-1.5 rounded-full text-sm font-medium capitalize ${getStatusStyle()}`}>
                 {status}
               </span>
             </div>
@@ -122,114 +117,92 @@ const FriendDetails = () => {
               {tags.map((tag, index) => (
                 <span
                   key={index}
-                  className="bg-[#C7F0D8] text-[#3A3A3A] text-sm px-3 py-1 rounded-full uppercase"
+                  className="bg-[#E8F5EE] text-[#1F5A4A] text-xs px-3 py-1 rounded-full uppercase font-medium tracking-wide"
                 >
                   {tag}
                 </span>
               ))}
             </div>
 
-            <p className="text-[#6B7280] italic mt-6 text-lg">"{short_note}"</p>
-            <p className="text-[#6B7280] mt-2">
-              Preferred: {preferred_contact}
+            <p className="text-[#6B7280] italic mt-5 text-sm leading-relaxed">
+              "{short_note}"
             </p>
-            <p className="text-[#6B7280] mt-1 break-all">{email}</p>
+
+            <div className="mt-4 space-y-1 text-sm text-[#6B7280]">
+              <p>
+                Preferred:{" "}
+                <span className="font-medium text-[#1F2937]">{preferred_contact}</span>
+              </p>
+              <p className="break-all">{email}</p>
+            </div>
           </div>
 
-          <button className="w-full bg-white rounded-xl shadow-sm px-6 py-5 text-[#1F2937] text-xl font-medium">
-            Snooze 2 Weeks
-          </button>
-
-          <button className="w-full bg-white rounded-xl shadow-sm px-6 py-5 text-[#1F2937] text-xl font-medium">
-            Archive
-          </button>
-
-          <button className="w-full bg-white rounded-xl shadow-sm px-6 py-5 text-[#F44336] text-xl font-medium">
-            Delete
-          </button>
+          
+          <div className="space-y-3 ">
+            <button className="w-full bg-white rounded-xl shadow-sm px-5 py-4 text-[#1F2937] font-medium hover:bg-[#F9FAFB] transition-colors text-left flex items-center gap-3 ">
+               Snooze 2 Weeks
+            </button>
+            <button className="w-full bg-white rounded-xl shadow-sm px-5 py-4 text-[#1F2937] font-medium hover:bg-[#F9FAFB] transition-colors text-left flex items-center gap-3">
+               Archive
+            </button>
+            <button className="w-full bg-white rounded-xl shadow-sm px-5 py-4 text-[#F44336] font-medium hover:bg-[#FEF2F2] transition-colors text-left flex items-center gap-3">
+               Delete
+            </button>
+          </div>
         </div>
 
-        <div className="lg:col-span-8 space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            <div className="bg-white rounded-xl shadow-sm p-6 text-center">
-              <h3 className="text-5xl font-bold text-[#244D3F]">
-                {days_since_contact}
-              </h3>
-              <p className="text-[#6B7280] text-2xl mt-3">
-                Days Since Contact
-              </p>
-            </div>
+        
+        <div className="lg:col-span-8 space-y-5">
 
-            <div className="bg-white rounded-xl shadow-sm p-6 text-center">
-              <h3 className="text-5xl font-bold text-[#244D3F]">{goal}</h3>
-              <p className="text-[#6B7280] text-2xl mt-3">Goal (Days)</p>
-            </div>
-
-            <div className="bg-white rounded-xl shadow-sm p-6 text-center">
-              <h3 className="text-4xl md:text-5xl font-bold text-[#244D3F]">
-                {next_due_date}
-              </h3>
-              <p className="text-[#6B7280] text-2xl mt-3">Next Due</p>
-            </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {statCards.map(({ label, value, icon }) => (
+              <div key={label} className="bg-white rounded-xl shadow-sm p-5 text-center">
+                <div className="flex items-center justify-center gap-1.5 text-[#176AE5] mb-2">
+                  {icon}
+                  <span className="text-xs font-medium uppercase tracking-wide text-[#6B7280]">
+                    {label}
+                  </span>
+                </div>
+                <p className="text-3xl sm:text-4xl font-bold text-[#1F5A4A]">{value}</p>
+              </div>
+            ))}
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm p-6 md:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          {/* Relationship Goal */}
+          <div className="bg-white rounded-xl shadow-sm p-5 md:p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <h3 className="text-4xl font-semibold text-[#244D3F]">
-                Relationship Goal
-              </h3>
-              <p className="text-[#6B7280] text-3xl mt-6">
+              <h3 className="text-lg font-semibold text-[#1F2937]">Relationship Goal</h3>
+              <p className="text-[#6B7280] mt-1 text-sm">
                 Connect every{" "}
-                <span className="font-bold text-[#1F2937]">{goal} days</span>
+                <span className="font-bold text-[#176AE5]">{goal} days</span>
               </p>
             </div>
-
-            <button className="btn bg-[#F3F4F6] border-none shadow-none text-[#1F2937]">
+            <button className="btn btn-sm bg-[#F3F4F6] border-none shadow-none text-[#1F2937] hover:bg-[#E5E7EB] self-start sm:self-auto">
               Edit
             </button>
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm p-6 md:p-8">
-            <h3 className="text-4xl font-semibold text-[#244D3F] mb-6">
-              Quick Check-In
-            </h3>
+          
+          <div className="bg-white rounded-xl shadow-sm p-5 md:p-6">
+            <h3 className="text-lg font-semibold text-[#1F2937] mb-4">Quick Check-In</h3>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <button
-                onClick={() => handleCheckIn("Call")}
-                className="bg-[#F3F4F6] rounded-xl p-6 flex flex-col items-center justify-center gap-4"
-              >
-                <img
-                  src={callIcon}
-                  alt="Call"
-                  className="w-10 h-10 object-contain"
-                />
-                <span className="text-2xl text-[#1F2937]">Call</span>
-              </button>
-
-              <button
-                onClick={() => handleCheckIn("Text")}
-                className="bg-[#F3F4F6] rounded-xl p-6 flex flex-col items-center justify-center gap-4"
-              >
-                <img
-                  src={textIcon}
-                  alt="Text"
-                  className="w-10 h-10 object-contain"
-                />
-                <span className="text-2xl text-[#1F2937]">Text</span>
-              </button>
-
-              <button
-                onClick={() => handleCheckIn("Video")}
-                className="bg-[#F3F4F6] rounded-xl p-6 flex flex-col items-center justify-center gap-4"
-              >
-                <img
-                  src={videoIcon}
-                  alt="Video"
-                  className="w-10 h-10 object-contain"
-                />
-                <span className="text-2xl text-[#1F2937]">Video</span>
-              </button>
+            <div className="grid grid-cols-3 gap-3 sm:gap-4">
+              {checkInActions.map(({ type, icon, color }) => (
+                <button
+                  key={type}
+                  onClick={() => handleCheckIn(type)}
+                  className="bg-[#F9FAFB] hover:bg-[#F3F4F6] rounded-xl p-4 sm:p-6 flex flex-col items-center justify-center gap-3 transition-colors"
+                >
+                  <div
+                    className="w-12 h-12 rounded-full flex items-center justify-center"
+                    style={{ backgroundColor: `${color}20` }}
+                  >
+                    <img src={icon} alt={type} className="w-6 h-6 object-contain" />
+                  </div>
+                  <span className="text-sm sm:text-base font-medium text-[#1F2937]">{type}</span>
+                </button>
+              ))}
             </div>
           </div>
         </div>
