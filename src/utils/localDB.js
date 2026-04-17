@@ -1,4 +1,3 @@
-
 const getData = () => {
   const data = localStorage.getItem("interactions");
   if (data) {
@@ -6,7 +5,6 @@ const getData = () => {
   }
   return [];
 };
-
 
 const saveData = (newItem) => {
   const data = getData();
