@@ -3,14 +3,19 @@ import { getData } from "../utils/localDB";
 import callIcon from "../assets/call.png";
 import textIcon from "../assets/text.png";
 import videoIcon from "../assets/video.png";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const Timeline = () => {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState("all");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const storedData = getData();
-    setData(storedData);
+    setTimeout(() => {
+      const storedData = getData();
+      setData(storedData);
+      setLoading(false);
+    }, 500);
   }, []);
 
   const getIcon = (type) => {
@@ -71,7 +76,9 @@ const Timeline = () => {
           </select>
         </div>
 
-        {filteredData.length === 0 ? (
+        {loading ? (
+          <LoadingSpinner />
+        ) : filteredData.length === 0 ? (
           <div className="bg-[#F9FAFB] rounded-xl p-8 text-center">
             <h3 className="text-2xl font-semibold text-[#1F2937] mb-2">
               No timeline activity found
