@@ -5,6 +5,7 @@ import Timeline from "../pages/Timeline";
 import Analytics from "../pages/Analytics";
 import ErrorPage from "../pages/ErrorPage";
 
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
+        loader: async () => {
+          const res = await fetch("/friends.json");
+          return res.json();
+        },
         element: <Home />,
       },
       {
@@ -22,6 +27,14 @@ const router = createBrowserRouter([
       {
         path: "analytics",
         element: <Analytics />,
+      },
+      {
+        path: "friend/:id",
+        loader: async () => {
+          const res = await fetch("/friends.json");
+          return res.json();
+        },
+        element: <FriendDetails />,
       },
     ],
   },
