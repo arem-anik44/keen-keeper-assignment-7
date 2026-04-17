@@ -68,7 +68,33 @@ const FriendDetails = () => {
   };
 
   saveData(newData);
-  toast.success(`${type} with ${name} saved!`);
+
+  if (type === "Call") {
+    toast.success(`Call with ${name} saved!`, {
+      style: {
+        background: "#176AE5",
+        color: "#fff",
+      },
+    });
+  }
+
+  if (type === "Text") {
+    toast.success(`Text with ${name} saved!`, {
+      style: {
+        background: "#22C55E",
+        color: "#fff",
+      },
+    });
+  }
+
+  if (type === "Video") {
+    toast.success(`Video with ${name} saved!`, {
+      style: {
+        background: "#F59E0B",
+        color: "#fff",
+      },
+    });
+  }
 };
 
   return (
