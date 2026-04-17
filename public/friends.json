@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "name": "Ariana Rahman",
+    "location": "Dhaka",
+    "category": "Close Friend",
+    "mobile": "01700000001",
+    "email": "ariana@example.com",
+    "lastContact": "2026-04-10",
+    "totalInteractions": 12
+  },
+  {
+    "id": 2,
+    "name": "Tanvir Hasan",
+    "location": "Chittagong",
+    "category": "Work Friend",
+    "mobile": "01700000002",
+    "email": "tanvir@example.com",
+    "lastContact": "2026-04-08",
+    "totalInteractions": 8
+  },
+  {
+    "id": 3,
+    "name": "Nusrat Jahan",
+    "location": "Khulna",
+    "category": "Close Friend",
+    "mobile": "01700000003",
+    "email": "nusrat@example.com",
+    "lastContact": "2026-04-05",
+    "totalInteractions": 15
+  },
+  {
+    "id": 4,
+    "name": "Siam Ahmed",
+    "location": "Rajshahi",
+    "category": "College Friend",
+    "mobile": "01700000004",
+    "email": "siam@example.com",
+    "lastContact": "2026-04-02",
+    "totalInteractions": 6
+  },
+  {
+    "id": 5,
+    "name": "Mehedi Hasan",
+    "location": "Sylhet",
+    "category": "Work Friend",
+    "mobile": "01700000005",
+    "email": "mehedi@example.com",
+    "lastContact": "2026-03-30",
+    "totalInteractions": 9
+  },
+  {
+    "id": 6,
+    "name": "Farzana Akter",
+    "location": "Barisal",
+    "category": "Close Friend",
+    "mobile": "01700000006",
+    "email": "farzana@example.com",
+    "lastContact": "2026-04-12",
+    "totalInteractions": 18
+  },
+  {
+    "id": 7,
+    "name": "Rakib Hossain",
+    "location": "Dhaka",
+    "category": "College Friend",
+    "mobile": "01700000007",
+    "email": "rakib@example.com",
+    "lastContact": "2026-04-01",
+    "totalInteractions": 7
+  },
+  {
+    "id": 8,
+    "name": "Jannat Ara",
+    "location": "Cumilla",
+    "category": "Close Friend",
+    "mobile": "01700000008",
+    "email": "jannat@example.com",
+    "lastContact": "2026-04-09",
+    "totalInteractions": 11
+  }
+]
