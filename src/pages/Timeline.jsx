@@ -13,17 +13,6 @@ const Timeline = () => {
     setData(storedData);
   }, []);
 
-  const getFilteredData = () => {
-    if (filter === "all") {
-      return data.slice().reverse();
-    }
-
-    return data
-      .filter((item) => item.type.toLowerCase() === filter)
-      .slice()
-      .reverse();
-  };
-
   const getIcon = (type) => {
     if (type === "Call") {
       return callIcon;
@@ -54,7 +43,13 @@ const Timeline = () => {
     });
   };
 
-  const filteredData = getFilteredData();
+  const filteredData =
+    filter === "all"
+      ? data.slice().reverse()
+      : data
+          .filter((item) => item.type.toLowerCase() === filter)
+          .slice()
+          .reverse();
 
   return (
     <div className="py-8">
@@ -67,9 +62,9 @@ const Timeline = () => {
           <select
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
-            className="select select-bordered w-full max-w-xs bg-[#F9FAFB]"
+            className="w-full max-w-xs bg-[#F9FAFB] border border-[#D1D5DB] rounded-xl px-4 py-3 text-[#1F2937] text-base outline-none focus:border-[#244D3F]"
           >
-            <option value="all">Filter timeline</option>
+            <option value="all">All</option>
             <option value="call">Call</option>
             <option value="text">Text</option>
             <option value="video">Video</option>
