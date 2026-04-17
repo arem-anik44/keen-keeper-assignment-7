@@ -1,4 +1,5 @@
-import { useLoaderData, useParams } from "react-router-dom";
+import { Link, useLoaderData, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import callIcon from "../assets/call.png";
 import textIcon from "../assets/text.png";
 import videoIcon from "../assets/video.png";
@@ -13,11 +14,22 @@ const FriendDetails = () => {
 
   if (!friend) {
     return (
-      <div className="py-10 text-center">
-        <h2 className="text-3xl font-bold text-[#1F2937] mb-3">
-          Friend not found
-        </h2>
-        <p className="text-[#6B7280]">No friend data found with this id.</p>
+      <div className="py-10">
+        <div className="bg-white rounded-2xl shadow-sm p-8 md:p-10 text-center max-w-2xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-[#1F2937] mb-3">
+            Friend not found
+          </h2>
+          <p className="text-[#6B7280] mb-6">
+            No friend data matched this profile. Please go back and select a valid friend.
+          </p>
+
+          <Link
+            to="/"
+            className="btn bg-[#176AE5] text-white border-none hover:bg-[#1257bf] rounded-xl px-6"
+          >
+            Back to Home
+          </Link>
+        </div>
       </div>
     );
   }
@@ -48,16 +60,16 @@ const FriendDetails = () => {
   };
 
   const handleCheckIn = (type) => {
-    const newData = {
-      id: Date.now(),
-      name: name,
-      type: type,
-      time: new Date().toLocaleString(),
-    };
-
-    saveData(newData);
-    alert(`${type} interaction saved!`);
+  const newData = {
+    id: Date.now(),
+    name: name,
+    type: type,
+    time: new Date().toLocaleString(),
   };
+
+  saveData(newData);
+  toast.success(`${type} with ${name} saved!`);
+};
 
   return (
     <div className="py-8">
